@@ -10,10 +10,17 @@ public class SCAN implements DiskScheduler{
     private int initialMovement;
     private int[] requests;
 
-    public SCAN(int numberOfProcess, int initialMovement, int[] requests) {
+    public SCAN(int initialMovement, int numeroCilindros, int[] requests) {
         this.numberOfProcess = requests.length;
         this.initialMovement = initialMovement;
-        this.requests = requests;
+        this.requests = new int[requests.length + 2];
+        this.requests[0] = 0;
+        int i = 1;
+        for (int request : requests) {
+            this.requests[i] = request;
+            i++;
+        }
+        this.requests[i++] = initialMovement;
     }
  
 
@@ -47,7 +54,7 @@ public class SCAN implements DiskScheduler{
         }
 
         // Para cada uma das requiscoes 
-        for (requisicao = 0; requisicao < 1 + 1; requisicao++) {
+        for (requisicao = 0; requisicao < numberOfProcess + 1; requisicao++) {
 
             // Calcula a diferenca entre os cilindros
             x = this.requests[requisicao + 1] - this.requests[requisicao];
